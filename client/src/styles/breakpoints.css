@@ -1,0 +1,21 @@
+/* Shared Responsive Breakpoints */
+/* Import this file in components to avoid duplicate media queries */
+
+:root {
+  --breakpoint-mobile: 600px;
+  --breakpoint-tablet: 900px;
+  --breakpoint-desktop: 1200px;
+}
+
+/* Mobile First Approach */
+@media (max-width: 600px) {
+  /* Mobile styles go here */
+}
+
+@media (max-width: 900px) {
+  /* Tablet styles go here */
+}
+
+@media (max-width: 1200px) {
+  /* Small desktop styles go here */
+}
