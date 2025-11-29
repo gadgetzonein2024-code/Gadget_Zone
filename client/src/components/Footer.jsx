@@ -13,16 +13,16 @@ const Footer = () => {
             <h3>Gadget Zone</h3>
             <p>Your trusted destination for the latest smartphones, smart wearables, and gaming gear.</p>
             <div className="social-links">
-              <a href="#" aria-label="Facebook">
+              <a href=" ." aria-label="Facebook">
                 <span className="social-icon">📘</span>
               </a>
-              <a href="#" aria-label="Twitter">
+              <a href=" ." aria-label="Twitter">
                 <span className="social-icon">🐦</span>
               </a>
-              <a href="#" aria-label="Instagram">
+              <a href=" ." aria-label="Instagram">
                 <span className="social-icon">📷</span>
               </a>
-              <a href="#" aria-label="YouTube">
+              <a href=" ." aria-label="YouTube">
                 <span className="social-icon">📺</span>
               </a>
             </div>

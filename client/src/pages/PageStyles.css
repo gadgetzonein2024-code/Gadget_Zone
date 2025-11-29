@@ -19,7 +19,7 @@
 .page-header h1 {
   font-size: 3rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #2ee6d2, #8069ff);
+  background: linear-gradient(135deg,  .2ee6d2,  .8069ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -39,7 +39,7 @@
 .page-section h2 {
   font-size: 1.8rem;
   font-weight: 600;
-  color: #fff;
+  color:  .fff;
   margin-bottom: 20px;
   position: relative;
   padding-left: 20px;
@@ -53,14 +53,14 @@
   transform: translateY(-50%);
   width: 4px;
   height: 24px;
-  background: linear-gradient(135deg, #2ee6d2, #8069ff);
+  background: linear-gradient(135deg,  .2ee6d2,  .8069ff);
   border-radius: 2px;
 }
 
 .page-section h3 {
   font-size: 1.3rem;
   font-weight: 600;
-  color: #fff;
+  color:  .fff;
   margin-bottom: 15px;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .page-section strong {
-  color: #2ee6d2;
+  color:  .2ee6d2;
   font-weight: 600;
 }
 
@@ -110,7 +110,7 @@
 }
 
 .value-card h3 {
-  color: #2ee6d2;
+  color:  .2ee6d2;
   margin-bottom: 15px;
   font-size: 1.2rem;
 }
@@ -149,7 +149,7 @@
 }
 
 .contact-method h3 {
-  color: #fff;
+  color:  .fff;
   margin-bottom: 10px;
   font-size: 1.1rem;
 }
@@ -160,7 +160,7 @@
 }
 
 .contact-method p:first-of-type {
-  color: #2ee6d2;
+  color:  .2ee6d2;
   font-weight: 600;
 }
 
@@ -178,7 +178,7 @@
 }
 
 .form-group label {
-  color: #fff;
+  color:  .fff;
   font-weight: 500;
   font-size: 0.95rem;
 }
@@ -189,7 +189,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   padding: 12px 16px;
-  color: #fff;
+  color:  .fff;
   font-size: 0.95rem;
   transition: all 0.3s ease;
 }
@@ -202,16 +202,16 @@
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #2ee6d2;
+  border-color:  .2ee6d2;
   background: rgba(255, 255, 255, 0.15);
 }
 
 .submit-button {
-  background: linear-gradient(135deg, #2ee6d2, #8069ff);
+  background: linear-gradient(135deg,  .2ee6d2,  .8069ff);
   border: none;
   border-radius: 8px;
   padding: 14px 28px;
-  color: #fff;
+  color:  .fff;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
@@ -246,7 +246,7 @@
 }
 
 .faq-item h3 {
-  color: #2ee6d2;
+  color:  .2ee6d2;
   margin-bottom: 12px;
   font-size: 1.1rem;
 }
@@ -261,7 +261,7 @@
 .back-link {
   display: inline-flex;
   align-items: center;
-  color: #2ee6d2;
+  color:  .2ee6d2;
   text-decoration: none;
   font-weight: 500;
   font-size: 0.95rem;
@@ -269,7 +269,7 @@
 }
 
 .back-link:hover {
-  color: #8069ff;
+  color:  .8069ff;
   transform: translateX(-4px);
 }
 

@@ -3,9 +3,9 @@ import './AdminDashboard.css'
 const navItems = ['Dashboard', 'Orders', 'Products', 'Inventory', 'Customers', 'Promotions', 'Support']
 
 const orderTimeline = [
-  { id: '#GZ12345', customer: 'Ritika Sharma', total: '₹89,990', status: 'Packed', time: '08:24 AM' },
-  { id: '#GZ12346', customer: 'Arjun Patel', total: '₹19,499', status: 'Shipped', time: '08:12 AM' },
-  { id: '#GZ12347', customer: 'Nisha Rao', total: '₹42,390', status: 'Payment Pending', time: '07:58 AM' },
+  { id: ' .GZ12345', customer: 'Ritika Sharma', total: '₹89,990', status: 'Packed', time: '08:24 AM' },
+  { id: ' .GZ12346', customer: 'Arjun Patel', total: '₹19,499', status: 'Shipped', time: '08:12 AM' },
+  { id: ' .GZ12347', customer: 'Nisha Rao', total: '₹42,390', status: 'Payment Pending', time: '07:58 AM' },
 ]
 
 const revenueCards = [

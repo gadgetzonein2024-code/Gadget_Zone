@@ -64,7 +64,7 @@ export default function CartSidebar() {
           contact: '9999999999'
         },
         theme: {
-          color: '#00ff88'
+          color: ' .00ff88'
         }
       }
       

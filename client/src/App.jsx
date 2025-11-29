@@ -319,7 +319,7 @@ function LandingPage() {
         </div>
         <nav className="nav-links">
           {navigation.map((link) => (
-            <a href="#" key={link} className={link === 'Home' ? 'active' : ''}>
+            <a href=" ." key={link} className={link === 'Home' ? 'active' : ''}>
               {link}
             </a>
           ))}

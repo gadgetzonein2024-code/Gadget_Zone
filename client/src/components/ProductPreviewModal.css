@@ -13,7 +13,7 @@
 }
 
 .modal-content {
-  background: #0a0e1a;
+  background:  .0a0e1a;
   border-radius: 16px;
   max-width: 900px;
   width: 100%;
@@ -29,7 +29,7 @@
   right: 1rem;
   background: rgba(255, 255, 255, 0.1);
   border: none;
-  color: #fff;
+  color:  .fff;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -79,7 +79,7 @@
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
-  background: #ff4444;
+  background:  .ff4444;
   color: white;
   padding: 0.25rem 0.5rem;
   border-radius: 12px;
@@ -113,7 +113,7 @@
 }
 
 .preview-thumbnail.active {
-  border-color: #00ff88;
+  border-color:  .00ff88;
 }
 
 .preview-thumbnail:hover {
@@ -130,7 +130,7 @@
 .preview-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color:  .fff;
   margin: 0;
   line-height: 1.2;
 }
@@ -153,23 +153,23 @@
 }
 
 .star {
-  color: #666;
+  color:  .666;
   font-size: 0.875rem;
 }
 
 .star.filled {
-  color: #00ff88;
+  color:  .00ff88;
 }
 
 .star.half {
-  background: linear-gradient(90deg, #00ff88 50%, #666 50%);
+  background: linear-gradient(90deg,  .00ff88 50%,  .666 50%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .rating-value {
-  color: #00ff88;
+  color:  .00ff88;
   font-weight: 600;
   font-size: 0.9rem;
 }
@@ -194,11 +194,11 @@
 .price {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #00ff88;
+  color:  .00ff88;
 }
 
 .discount-badge {
-  background: #ff4444;
+  background:  .ff4444;
   color: white;
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
@@ -219,7 +219,7 @@
 }
 
 .savings {
-  color: #00ff88;
+  color:  .00ff88;
   font-weight: 600;
   font-size: 0.9rem;
 }
@@ -238,7 +238,7 @@
 }
 
 .preview-highlights h4 {
-  color: #00ff88;
+  color:  .00ff88;
   margin: 0 0 0.75rem 0;
   font-size: 0.9rem;
   font-weight: 600;
@@ -264,7 +264,7 @@
   content: '✓';
   position: absolute;
   left: 0;
-  color: #00ff88;
+  color:  .00ff88;
   font-weight: bold;
   font-size: 0.8rem;
 }
@@ -286,7 +286,7 @@
 .quantity-btn {
   background: rgba(255, 255, 255, 0.1);
   border: none;
-  color: #fff;
+  color:  .fff;
   width: 32px;
   height: 32px;
   cursor: pointer;
@@ -306,7 +306,7 @@
 .quantity-selector input {
   background: transparent;
   border: none;
-  color: #fff;
+  color:  .fff;
   text-align: center;
   width: 50px;
   font-size: 0.9rem;
@@ -315,8 +315,8 @@
 
 .add-to-cart-btn {
   flex: 1;
-  background: linear-gradient(135deg, #00ff88, #00cc6a);
-  color: #0a0e1a;
+  background: linear-gradient(135deg,  .00ff88,  .00cc6a);
+  color:  .0a0e1a;
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
@@ -349,11 +349,11 @@
 }
 
 .stock-status .status.in-stock {
-  color: #00ff88;
+  color:  .00ff88;
 }
 
 .stock-status .status.out-of-stock {
-  color: #ff4444;
+  color:  .ff4444;
 }
 
 .shipping-info {
@@ -375,8 +375,8 @@
 
 .view-details-btn {
   background: transparent;
-  color: #00ff88;
-  border: 1px solid #00ff88;
+  color:  .00ff88;
+  border: 1px solid  .00ff88;
   padding: 0.75rem 2rem;
   border-radius: 6px;
   font-weight: 600;
@@ -385,8 +385,8 @@
 }
 
 .view-details-btn:hover {
-  background: #00ff88;
-  color: #0a0e1a;
+  background:  .00ff88;
+  color:  .0a0e1a;
   transform: translateY(-1px);
 }
 
