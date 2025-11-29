@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://gadget-zone-7r8e.onrender.com'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://gadget-zone-7r8e.onrender.com/api'
 
 const buildUrl = (path) => {
   if (path.startsWith('http')) return path

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Debug Test</title>
+</head>
+<body>
+    <h1>Login Debug Tool</h1>
+    
+    <div id="results"></div>
+    
+    <script>
+        const API_BASE = 'https://gadget-zone-7r8e.onrender.com/api';
+        const results = document.getElementById('results');
+        
+        function log(message, isError = false) {
+            const div = document.createElement('div');
+            div.style.color = isError ? 'red' : 'green';
+            div.style.margin = '10px 0';
+            div.style.padding = '10px';
+            div.style.border = isError ? '1px solid red' : '1px solid green';
+            div.style.background = isError ? '#ffe6e6' : '#e6ffe6';
+            div.innerHTML = message;
+            results.appendChild(div);
+        }
+        
+        async function testLogin(email, password, label) {
+            log(`🔍 Testing ${label}...`);
+            log(`📧 Email: ${email}`);
+            log(`🔑 Password: ${password}`);
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log(`✅ ${label} SUCCESS!`);
+                    log(`🎫 Token: ${data.token}`);
+                    log(`👤 User: ${JSON.stringify(data.user)}`);
+                } else {
+                    log(`❌ ${label} FAILED!`, true);
+                    log(`🚫 Status: ${response.status}`);
+                    log(`💬 Message: ${data.message}`);
+                }
+            } catch (error) {
+                log(`💥 ${label} ERROR: ${error.message}`, true);
+            }
+            
+            log('---');
+        }
+        
+        async function testRegistration() {
+            log('📝 Testing customer registration...');
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: 'Test Customer',
+                        email: 'test@example.com',
+                        password: 'test123'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log('✅ Registration SUCCESS!');
+                    log(`🎫 Token: ${data.token}`);
+                    log(`👤 User: ${JSON.stringify(data.user)}`);
+                    
+                    // Now test login with the new account
+                    await testLogin('test@example.com', 'test123', 'New Customer Login');
+                } else {
+                    log('❌ Registration FAILED!', true);
+                    log(`🚫 Status: ${response.status}`);
+                    log(`💬 Message: ${data.message}`);
+                    
+                    // Try login anyway (user might already exist)
+                    await testLogin('test@example.com', 'test123', 'Existing Customer Login');
+                }
+            } catch (error) {
+                log(`💥 Registration ERROR: ${error.message}`, true);
+            }
+            
+            log('---');
+        }
+        
+        async function testHealthCheck() {
+            log('🏥 Testing API health...');
+            
+            try {
+                const response = await fetch(`${API_BASE}/../health`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log('✅ API Health Check PASSED!');
+                    log(`📊 Status: ${JSON.stringify(data)}`);
+                } else {
+                    log('❌ API Health Check FAILED!', true);
+                }
+            } catch (error) {
+                log(`💥 Health Check ERROR: ${error.message}`, true);
+            }
+            
+            log('---');
+        }
+        
+        // Run all tests
+        async function runAllTests() {
+            log('🚀 Starting Login Debug Tests...\n');
+            
+            await testHealthCheck();
+            await testLogin('admin@gadgetzone.com', 'GZ@admin123', 'Built-in Admin');
+            await testRegistration();
+        }
+        
+        // Auto-run tests
+        runAllTests();
+    </script>
+</body>
+</html>

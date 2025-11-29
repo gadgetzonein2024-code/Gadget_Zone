@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Admin Account</title>
+</head>
+<body>
+    <h1>Create Admin Account</h1>
+    
+    <div id="results"></div>
+    
+    <script>
+        const API_BASE = 'https://gadget-zone-7r8e.onrender.com/api';
+        const results = document.getElementById('results');
+        
+        function log(message, isError = false) {
+            const div = document.createElement('div');
+            div.style.color = isError ? 'red' : 'green';
+            div.style.margin = '10px 0';
+            div.style.padding = '10px';
+            div.style.border = isError ? '1px solid red' : '1px solid green';
+            div.style.background = isError ? '#ffe6e6' : '#e6ffe6';
+            div.innerHTML = message;
+            results.appendChild(div);
+        }
+        
+        async function createAdmin() {
+            log('🔧 Creating admin account...');
+            
+            try {
+                // First try to register as admin (might not work if backend prevents admin registration)
+                const response = await fetch(`${API_BASE}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: 'Gadget Zone Admin',
+                        email: 'admin@gadgetzone.com',
+                        password: 'GZ@admin123',
+                        role: 'admin'  // Try to set admin role
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log('✅ Admin Registration SUCCESS!');
+                    log(`🎫 Token: ${data.token}`);
+                    log(`👤 User: ${JSON.stringify(data.user)}`);
+                    
+                    // Test admin login
+                    await testAdminLogin();
+                } else {
+                    log('❌ Admin Registration FAILED!', true);
+                    log(`🚫 Status: ${response.status}`);
+                    log(`💬 Message: ${data.message}`);
+                    
+                    // Try admin login anyway
+                    await testAdminLogin();
+                }
+            } catch (error) {
+                log(`💥 Admin Creation ERROR: ${error.message}`, true);
+            }
+        }
+        
+        async function testAdminLogin() {
+            log('🔍 Testing admin login...');
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: 'admin@gadgetzone.com',
+                        password: 'GZ@admin123'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log('✅ Admin Login SUCCESS!');
+                    log(`🎫 Token: ${data.token}`);
+                    log(`👤 User: ${JSON.stringify(data.user)}`);
+                } else {
+                    log('❌ Admin Login FAILED!', true);
+                    log(`🚫 Status: ${response.status}`);
+                    log(`💬 Message: ${data.message}`);
+                }
+            } catch (error) {
+                log(`💥 Admin Login ERROR: ${error.message}`, true);
+            }
+        }
+        
+        // Auto-run
+        createAdmin();
+    </script>
+</body>
+</html>
