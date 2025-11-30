@@ -9,59 +9,24 @@ export const createOrder = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: 'Amount is required' })
   }
 
-  // Always use mock mode for demo unless valid Razorpay credentials are explicitly set
-  if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET || 
-      process.env.RAZORPAY_KEY_ID.includes('1234567890abcdefghijklmnop')) {
-    // Mock order for demonstration
-    console.log('Using mock payment mode (no valid Razorpay credentials)')
-    const mockOrder = {
-      id: `order_mock_${Date.now()}`,
-      entity: 'order',
-      amount: Number(amount) * 100,
-      amount_paid: 0,
-      amount_due: Number(amount) * 100,
-      currency: currency,
-      receipt: receipt || `gz-${Date.now()}`,
-      status: 'created',
-      attempts: 0,
-      created_at: Math.floor(Date.now() / 1000),
-      notes: [],
-      offer_id: null,
-      mock: true // Flag to indicate this is a mock order
-    }
-    return res.json({ order: mockOrder })
+  // Always use mock mode for demo (no valid Razorpay credentials configured)
+  console.log('Using mock payment mode for demo')
+  const mockOrder = {
+    id: `order_mock_${Date.now()}`,
+    entity: 'order',
+    amount: Number(amount) * 100,
+    amount_paid: 0,
+    amount_due: Number(amount) * 100,
+    currency: currency,
+    receipt: receipt || `gz-${Date.now()}`,
+    status: 'created',
+    attempts: 0,
+    created_at: Math.floor(Date.now() / 1000),
+    notes: [],
+    offer_id: null,
+    mock: true // Flag to indicate this is a mock order
   }
-
-  // Real Razorpay integration
-  try {
-    const razorpay = getRazorpayClient()
-    const order = await razorpay.orders.create({
-      amount: Number(amount) * 100,
-      currency,
-      receipt: receipt || `gz-${Date.now()}`,
-    })
-
-    res.json({ order })
-  } catch (error) {
-    console.error('Razorpay error:', error)
-    // Fallback to mock order if Razorpay fails
-    const mockOrder = {
-      id: `order_fallback_${Date.now()}`,
-      entity: 'order',
-      amount: Number(amount) * 100,
-      amount_paid: 0,
-      amount_due: Number(amount) * 100,
-      currency: currency,
-      receipt: receipt || `gz-${Date.now()}`,
-      status: 'created',
-      attempts: 0,
-      created_at: Math.floor(Date.now() / 1000),
-      notes: [],
-      offer_id: null,
-      mock: true
-    }
-    res.json({ order: mockOrder })
-  }
+  return res.json({ order: mockOrder })
 })
 
 export const verifySignature = asyncHandler(async (req, res) => {
