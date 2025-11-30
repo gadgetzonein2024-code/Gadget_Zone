@@ -102,6 +102,35 @@ export default function MockPaymentModal({ onClose, onSuccess, amount }) {
         </div>
       </div>
       
+      <style jsx global>{`
+        .payment-modal-overlay {
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          background: rgba(0, 0, 0, 0.5);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 99999 !important;
+          padding: 20px;
+          box-sizing: border-box;
+        }
+        
+        .payment-modal {
+          background: white;
+          border-radius: 12px;
+          width: 100%;
+          max-width: 500px;
+          max-height: 90vh;
+          overflow-y: auto;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+          position: relative;
+          z-index: 100000 !important;
+        }
+      `}</style>
+      
       <style jsx>{`
         .payment-modal-overlay {
           position: fixed;
@@ -113,7 +142,9 @@ export default function MockPaymentModal({ onClose, onSuccess, amount }) {
           display: flex;
           align-items: center;
           justify-content: center;
-          z-index: 1000;
+          z-index: 99999;
+          padding: 20px;
+          box-sizing: border-box;
         }
         
         .payment-modal {
@@ -124,6 +155,8 @@ export default function MockPaymentModal({ onClose, onSuccess, amount }) {
           max-height: 90vh;
           overflow-y: auto;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+          position: relative;
+          z-index: 100000;
         }
         
         .payment-modal-header {
