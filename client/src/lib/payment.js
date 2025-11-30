@@ -2,19 +2,22 @@ import { apiRequest } from '../lib/api.js'
 
 export const createRazorpayOrder = async (amount, currency = 'INR') => {
   try {
-    const response = await apiRequest('payments/create-order', {
+    console.log('Creating order with amount:', amount, currency)
+    const response = await apiRequest('payments/order', {
       method: 'POST',
       body: JSON.stringify({
-        amount: amount * 100, // Razorpay expects amount in paise
+        amount: amount, // Backend will convert to paise
         currency,
         receipt: `receipt_${Date.now()}`
       })
     })
     
+    console.log('Order created successfully:', response)
     return response
   } catch (error) {
     console.error('Order creation error:', error)
-    throw new Error('Failed to create payment order')
+    console.error('Error details:', error.message, error.status)
+    throw new Error(`Failed to create payment order: ${error.message}`)
   }
 }
 
