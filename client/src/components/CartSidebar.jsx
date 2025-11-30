@@ -39,7 +39,7 @@ export default function CartSidebar() {
       
       // Razorpay options for real payments
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_1DP5mmOlFfGpmG', // Use environment variable or fallback
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID, // Only use if environment variable is set
         amount: order.order.amount, // Use order.order.amount from backend response
         currency: order.order.currency,
         name: 'Gadget Zone',
