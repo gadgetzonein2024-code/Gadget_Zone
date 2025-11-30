@@ -18,6 +18,20 @@ export default function CartSidebar() {
     setIsProcessing(true)
     
     try {
+      // Check if Razorpay key is available
+      const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID
+      if (!razorpayKey) {
+        console.log('No Razorpay key found, using mock payment mode')
+        // Simulate successful payment for demo
+        setTimeout(() => {
+          alert('Mock payment successful! Order placed. (Demo Mode - No actual payment processed)')
+          clearCart()
+          toggleCart()
+          setIsProcessing(false)
+        }, 2000)
+        return
+      }
+      
       // Load Razorpay script
       await loadRazorpayScript()
       
@@ -39,7 +53,7 @@ export default function CartSidebar() {
       
       // Razorpay options for real payments
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID, // Only use if environment variable is set
+        key: razorpayKey,
         amount: order.order.amount, // Use order.order.amount from backend response
         currency: order.order.currency,
         name: 'Gadget Zone',
