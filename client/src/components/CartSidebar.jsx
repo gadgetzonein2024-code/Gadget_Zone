@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { useCart } from '../context/CartContext'
 import { Link } from 'react-router-dom'
 import { createRazorpayOrder, verifyPayment, loadRazorpayScript } from '../lib/payment'
+import MockPaymentModal from './MockPaymentModal'
 
 export default function CartSidebar() {
   const { items, isOpen, toggleCart, removeFromCart, updateQuantity, getTotalPrice, getTotalItems, clearCart } = useCart()
   const [isProcessing, setIsProcessing] = useState(false)
+  const [showMockModal, setShowMockModal] = useState(false)
   
   if (!isOpen) return null
   
@@ -19,16 +21,11 @@ export default function CartSidebar() {
     
     try {
       // Check if Razorpay key is available
-      const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID
+      const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_1DP5mmOlFfGpmG'
       if (!razorpayKey) {
-        console.log('No Razorpay key found, using mock payment mode')
-        // Simulate successful payment for demo
-        setTimeout(() => {
-          alert('Mock payment successful! Order placed. (Demo Mode - No actual payment processed)')
-          clearCart()
-          toggleCart()
-          setIsProcessing(false)
-        }, 2000)
+        console.log('No Razorpay key found, using mock payment modal')
+        setShowMockModal(true)
+        setIsProcessing(false)
         return
       }
       
@@ -40,14 +37,9 @@ export default function CartSidebar() {
       
       // Check if this is a mock order (no real Razorpay credentials)
       if (order.order?.mock) {
-        console.log('Using mock payment mode')
-        // Simulate successful payment for demo
-        setTimeout(() => {
-          alert('Mock payment successful! Order placed. (Demo Mode - No actual payment processed)')
-          clearCart()
-          toggleCart()
-          setIsProcessing(false)
-        }, 2000)
+        console.log('Using mock payment modal')
+        setShowMockModal(true)
+        setIsProcessing(false)
         return
       }
       
@@ -104,6 +96,18 @@ export default function CartSidebar() {
       alert('Failed to initiate payment. Please try again.')
       setIsProcessing(false)
     }
+  }
+  
+  const handleMockPaymentSuccess = () => {
+    setShowMockModal(false)
+    alert('Mock payment successful! Order placed. (Demo Mode - No actual payment processed)')
+    clearCart()
+    toggleCart()
+  }
+  
+  const handleMockModalClose = () => {
+    setShowMockModal(false)
+    setIsProcessing(false)
   }
   
   return (
@@ -183,6 +187,14 @@ export default function CartSidebar() {
           </div>
         )}
       </div>
+      
+      {showMockModal && (
+        <MockPaymentModal
+          onClose={handleMockModalClose}
+          onSuccess={handleMockPaymentSuccess}
+          amount={totalPrice}
+        />
+      )}
     </>
   )
 }
