@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Razorpay Environment Variables</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .test-section { background: #f8f9fa; padding: 20px; margin: 20px 0; border-radius: 8px; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; padding: 15px; border-radius: 4px; margin: 20px 0; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; padding: 15px; border-radius: 4px; margin: 20px 0; }
+        code { background: #e9ecef; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+        .btn { background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Test Razorpay Environment Variables</h1>
+    
+    <div class="test-section">
+        <h3>Frontend Environment Variables</h3>
+        <p>Check if VITE_RAZORPAY_KEY_ID is available in the frontend:</p>
+        <button onclick="testFrontendKey()" class="btn">Test Frontend Key</button>
+        <div id="frontend-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Backend Razorpay Orders</h3>
+        <p>Test if backend is creating real Razorpay orders:</p>
+        <button onclick="testBackendOrder()" class="btn">Test Backend Order</button>
+        <div id="backend-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Complete Payment Flow Test</h3>
+        <p>Test the complete checkout process:</p>
+        <button onclick="testPaymentFlow()" class="btn">Test Payment Flow</button>
+        <div id="payment-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>📋 Troubleshooting Steps</h3>
+        <ol>
+            <li><strong>Check Netlify Environment:</strong>
+                <ul>
+                    <li>Go to Netlify dashboard</li>
+                    <li>Site settings → Build & deploy → Environment</li>
+                    <li>Verify RAZORPAY_KEY_ID is set</li>
+                    <li>Check for typos in the key name</li>
+                </ul>
+            </li>
+            <li><strong>Check Render Environment:</strong>
+                <ul>
+                    <li>Go to Render dashboard</li>
+                    <li>Find your backend service</li>
+                    <li>Environment → Verify RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET</li>
+                </ul>
+            </li>
+            <li><strong>Clear Browser Cache:</strong>
+                <ul>
+                    <li>Hard refresh: Ctrl+F5 (Windows) or Cmd+Shift+R (Mac)</li>
+                    <li>Or open in incognito/private window</li>
+                </ul>
+            </li>
+            <li><strong>Wait for Deployment:</strong>
+                <ul>
+                    <li>Netlify changes take 1-2 minutes</li>
+                    <li>Render changes take 1-2 minutes</li>
+                    <li>Both need to be deployed</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <script>
+        async function testFrontendKey() {
+            const resultDiv = document.getElementById('frontend-result');
+            const key = import.meta.env.RAZORPAY_KEY_ID;
+            
+            if (key) {
+                resultDiv.innerHTML = `
+                    <div class="success">
+                        ✅ Frontend key found: <code>${key}</code>
+                        <br>Key length: ${key.length} characters
+                        <br>Starts with: ${key.startsWith('rzp_test_') ? 'rzp_test_' : 'Other'}
+                    </div>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        ❌ No frontend key found (RAZORPAY_KEY_ID is undefined)
+                        <br>This means Netlify environment variable is not set or not deployed yet.
+                    </div>
+                `;
+            }
+        }
+
+        async function testBackendOrder() {
+            const resultDiv = document.getElementById('backend-result');
+            
+            try {
+                const response = await fetch('https://gadget-zone-7r8e.onrender.com/api/payments/order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ amount: 100 })
+                });
+                
+                const data = await response.json();
+                const order = data.order;
+                
+                if (order.mock) {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            ❌ Backend returned mock order
+                            <br>Order ID: ${order.id}
+                            <br>This means Render environment variables are not set correctly.
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            ✅ Backend created real Razorpay order
+                            <br>Order ID: ${order.id}
+                            <br>Amount: ₹${order.amount / 100}
+                            <br>Status: ${order.status}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        ❌ Backend test failed: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function testPaymentFlow() {
+            const resultDiv = document.getElementById('payment-result');
+            
+            try {
+                // Test frontend key
+                const key = import.meta.env.RAZORPAY_KEY_ID;
+                
+                // Test backend order
+                const response = await fetch('https://gadget-zone-7r8e.onrender.com/api/payments/order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ amount: 100 })
+                });
+                
+                const data = await response.json();
+                const order = data.order;
+                
+                if (!key && order.mock) {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            ❌ Both frontend and backend issues detected
+                            <br>Frontend: No RAZORPAY_KEY_ID
+                            <br>Backend: Creating mock orders
+                            <br><strong>Solution:</strong> Check both Netlify and Render environment variables
+                        </div>
+                    `;
+                } else if (!key && !order.mock) {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            ❌ Frontend issue detected
+                            <br>Frontend: No RAZORPAY_KEY_ID
+                            <br>Backend: Working correctly (real orders)
+                            <br><strong>Solution:</strong> Check Netlify environment variables
+                        </div>
+                    `;
+                } else if (key && order.mock) {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            ❌ Backend issue detected
+                            <br>Frontend: Key found (${key.substring(0, 15)}...)
+                            <br>Backend: Creating mock orders
+                            <br><strong>Solution:</strong> Check Render environment variables
+                        </div>
+                    `;
+                } else if (key && !order.mock) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            ✅ Everything is working correctly!
+                            <br>Frontend: Key found (${key.substring(0, 15)}...)
+                            <br>Backend: Creating real orders (${order.id})
+                            <br><strong>Your payment system should work now!</strong>
+                        </div>
+                    `;
+                }
+                
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        ❌ Payment flow test failed: ${error.message}
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

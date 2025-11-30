@@ -32,7 +32,7 @@ export default function CartSidebar() {
       }
       
       // Get Razorpay key from environment (should be available if backend is working)
-      const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID
+      const razorpayKey = import.meta.env.RAZORPAY_KEY_ID
       if (!razorpayKey) {
         console.log('Frontend: No Razorpay key found, but backend is working. Using mock modal.')
         setShowMockModal(true)
