@@ -20,21 +20,21 @@ export default function CartSidebar() {
     setIsProcessing(true)
     
     try {
-      // Always check if we have valid Razorpay credentials first
-      const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID
-      if (!razorpayKey || razorpayKey.includes('1DP5mmOlFfGpmG')) {
-        console.log('No valid Razorpay key found, using mock payment modal')
-        setShowMockModal(true)
-        setIsProcessing(false)
-        return
-      }
-      
-      // Create order first to check if it's a mock order
+      // Create order first to check if backend has real Razorpay credentials
       const order = await createRazorpayOrder(totalPrice)
       
       // Check if this is a mock order (backend detected no valid credentials)
       if (order.order?.mock) {
         console.log('Backend returned mock order, using mock payment modal')
+        setShowMockModal(true)
+        setIsProcessing(false)
+        return
+      }
+      
+      // Get Razorpay key from environment (should be available if backend is working)
+      const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID
+      if (!razorpayKey) {
+        console.log('Frontend: No Razorpay key found, but backend is working. Using mock modal.')
         setShowMockModal(true)
         setIsProcessing(false)
         return
