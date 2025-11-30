@@ -4,6 +4,7 @@
 
 [build.environment]
   VITE_API_URL = "https://gadget-zone-7r8e.onrender.com/api"
+  VITE_RAZORPAY_KEY_ID = "rzp_test_1DP5mmOlFfGpmG"
 
 [[redirects]]
   from = "/*"
@@ -12,6 +13,8 @@
 
 [context.production.environment]
   VITE_API_URL = "https://gadget-zone-7r8e.onrender.com/api"
+  VITE_RAZORPAY_KEY_ID = "rzp_test_1DP5mmOlFfGpmG"
 
 [context.deploy-preview.environment]
   VITE_API_URL = "https://gadget-zone-7r8e.onrender.com/api"
+  VITE_RAZORPAY_KEY_ID = "rzp_test_1DP5mmOlFfGpmG"

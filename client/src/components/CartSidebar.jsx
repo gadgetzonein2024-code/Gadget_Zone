@@ -26,12 +26,12 @@ export default function CartSidebar() {
       
       // Razorpay options
       const options = {
-        key: 'rzp_test_1DP5mmOlFfGpmG', // Razorpay test key
-        amount: order.amount,
-        currency: order.currency,
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_1DP5mmOlFfGpmG', // Use environment variable or fallback
+        amount: order.order.amount, // Use order.order.amount from backend response
+        currency: order.order.currency,
         name: 'Gadget Zone',
         description: `Payment for ${totalItems} item(s)`,
-        order_id: order.id,
+        order_id: order.order.id, // Use order.order.id from backend response
         handler: async (response) => {
           try {
             // Verify payment
@@ -41,7 +41,7 @@ export default function CartSidebar() {
               response.razorpay_signature
             )
             
-            if (verification.success) {
+            if (verification.valid) { // Backend returns { valid: boolean }
               alert('Payment successful! Order placed.')
               clearCart()
               toggleCart()
@@ -64,7 +64,7 @@ export default function CartSidebar() {
           contact: '9999999999'
         },
         theme: {
-          color: ' .00ff88'
+          color: '#007bff' // Fixed color format
         }
       }
       
