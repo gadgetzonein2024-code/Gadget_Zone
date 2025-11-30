@@ -24,7 +24,20 @@ export default function CartSidebar() {
       // Create order
       const order = await createRazorpayOrder(totalPrice)
       
-      // Razorpay options
+      // Check if this is a mock order (no real Razorpay credentials)
+      if (order.order?.mock) {
+        console.log('Using mock payment mode')
+        // Simulate successful payment for demo
+        setTimeout(() => {
+          alert('Mock payment successful! Order placed. (Demo Mode - No actual payment processed)')
+          clearCart()
+          toggleCart()
+          setIsProcessing(false)
+        }, 2000)
+        return
+      }
+      
+      // Razorpay options for real payments
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_1DP5mmOlFfGpmG', // Use environment variable or fallback
         amount: order.order.amount, // Use order.order.amount from backend response
