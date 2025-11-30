@@ -9,10 +9,11 @@ export const createOrder = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: 'Amount is required' })
   }
 
-  // Check if we have valid Razorpay credentials
-  if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+  // Always use mock mode for demo unless valid Razorpay credentials are explicitly set
+  if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET || 
+      process.env.RAZORPAY_KEY_ID.includes('1234567890abcdefghijklmnop')) {
     // Mock order for demonstration
-    console.log('Using mock payment mode (no Razorpay credentials)')
+    console.log('Using mock payment mode (no valid Razorpay credentials)')
     const mockOrder = {
       id: `order_mock_${Date.now()}`,
       entity: 'order',

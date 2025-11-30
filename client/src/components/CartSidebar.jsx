@@ -20,28 +20,28 @@ export default function CartSidebar() {
     setIsProcessing(true)
     
     try {
-      // Check if Razorpay key is available
-      const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_1DP5mmOlFfGpmG'
-      if (!razorpayKey) {
-        console.log('No Razorpay key found, using mock payment modal')
+      // Always check if we have valid Razorpay credentials first
+      const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID
+      if (!razorpayKey || razorpayKey.includes('1DP5mmOlFfGpmG')) {
+        console.log('No valid Razorpay key found, using mock payment modal')
         setShowMockModal(true)
         setIsProcessing(false)
         return
       }
       
-      // Load Razorpay script
-      await loadRazorpayScript()
-      
-      // Create order
+      // Create order first to check if it's a mock order
       const order = await createRazorpayOrder(totalPrice)
       
-      // Check if this is a mock order (no real Razorpay credentials)
+      // Check if this is a mock order (backend detected no valid credentials)
       if (order.order?.mock) {
-        console.log('Using mock payment modal')
+        console.log('Backend returned mock order, using mock payment modal')
         setShowMockModal(true)
         setIsProcessing(false)
         return
       }
+      
+      // Load Razorpay script only for real payments
+      await loadRazorpayScript()
       
       // Razorpay options for real payments
       const options = {
@@ -93,7 +93,8 @@ export default function CartSidebar() {
       
     } catch (error) {
       console.error('Checkout error:', error)
-      alert('Failed to initiate payment. Please try again.')
+      // If anything fails, fall back to mock modal
+      setShowMockModal(true)
       setIsProcessing(false)
     }
   }
