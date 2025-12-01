@@ -10,6 +10,7 @@
     "build:admin": "pnpm --filter admin build",
     "dev:server": "pnpm --filter server dev",
     "build:server": "pnpm --filter server build",
+    "build": "pnpm build:client && pnpm build:admin",
     "lint": "pnpm -r lint",
     "test": "pnpm -r test"
   }
