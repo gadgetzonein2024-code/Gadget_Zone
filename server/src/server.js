@@ -15,7 +15,9 @@ app.use(cors({
     'http://localhost:5173',
     'http://localhost:3000',
     'https://gadgetzone2024.netlify.app',
-    'https://gadget-zone-7r8e.onrender.com'
+    'https://gadget-zone-7r8e.onrender.com',
+    'https://gadgetzone2024.shop',
+    'https://www.gadgetzone2024.shop'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
