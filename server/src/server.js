@@ -10,19 +10,20 @@ dotenv.config()
 
 const app = express()
 
-app.use(cors({ 
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'https://gadgetzone2024.netlify.app',
-    'https://gadget-zone-7r8e.onrender.com',
-    'https://gadgetzone2024.shop',
-    'https://www.gadgetzone2024.shop'
-  ],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}))
+// Temporary CORS configuration for testing
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', true);
+  
+  // Handle preflight
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  
+  next();
+})
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'))
